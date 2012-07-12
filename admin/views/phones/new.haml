@@ -1,0 +1,15 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first=link_to pat(:list), url(:phones, :index)
+      %li.active=link_to pat(:new), url(:phones, :new)
+  .content
+    %h2.title
+      =pat(:new)
+      =mt(:phone)
+      %small add awesome juice to your device
+    .inner
+      -form_for :phone, url(:phones, :create), :class => :form do |f|
+        =partial "phones/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")

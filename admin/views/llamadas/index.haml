@@ -1,0 +1,34 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first.active=link_to pat(:list), url(:llamadas, :index)
+      %li=link_to pat(:new), url(:llamadas, :new)
+  .content
+    %h2.title
+      =pat(:all)
+      =mt(:llamadas)
+    .inner
+      %table.table
+        %tr
+          %th=mat(:llamada, :call_direction)
+          %th=mat(:llamada, :from_number)
+          %th=mat(:llamada, :to_number)
+          %th=mat(:llamada, :call_uuid)
+          %th=mat(:llamada, :created_at)
+          %th.last="&nbsp;"
+        -@llamadas.each do |llamada|
+          %tr
+            
+            %td=llamada.call_direction
+            %td=llamada.from_number
+            %td=llamada.to_number
+            %td=llamada.call_uuid
+            %td=llamada.created_at
+            %td.last
+              =button_to pat(:edit), url(:llamadas, :edit, :id => llamada.id), :method => :get, :class => :button_to
+              ="|"
+              =button_to pat(:delete), url(:llamadas, :destroy, :id => llamada.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
+      .actions-bar.wat-cf
+        .actions="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")

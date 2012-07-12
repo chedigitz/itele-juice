@@ -1,0 +1,15 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first=link_to pat(:list), url(:tunnels, :index)
+      %li=link_to pat(:new), url(:tunnels, :new)
+      %li.active=link_to pat(:edit), url(:tunnels, :edit, :id => @tunnel.id)
+  .content
+    %h2.title
+      =pat(:edit)
+      =mt(:tunnel)
+    .inner
+      -form_for :tunnel, url(:tunnels, :update, :id => @tunnel.id), :method => :put, :class => :form do |f|
+        =partial "tunnels/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")

@@ -1,0 +1,16 @@
+.group
+  =f.label :url
+  =f.error_message_on :url
+  =f.text_field :url, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :active
+  =f.error_message_on :active
+  =f.check_box :active, :class => :check_box
+  %span.description Ex: check to activate url tunnel 
+
+
+.group.navform.wat-cf
+  =f.submit pat(:save), :class => "btn btn-primary"
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:tunnels, :index)}';return false", :class => "btn"

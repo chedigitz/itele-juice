@@ -1,0 +1,31 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first.active=link_to pat(:list), url(:phones, :index)
+      %li=link_to pat(:new), url(:phones, :new)
+  .content
+    %h2.title
+      =pat(:all)
+      =mt(:phones)
+      %small drinking the sweet juice
+    .inner
+      %table.table
+        %tr
+          %th.first=mat(:phone, :name)
+          %th=mat(:phone, :number)
+          %th=mat(:phone, :active)
+          %th.last="&nbsp;"
+        -@phones.each do |phone|
+          %tr
+            %td.first=phone.name
+            %td=phone.number
+            %td=phone.active
+
+            %td.last
+              =button_to pat(:edit), url(:phones, :edit, :id => phone.id), :method => :get, :class => :button_to
+              ="|"
+              =button_to pat(:delete), url(:phones, :destroy, :id => phone.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
+      .actions-bar.wat-cf
+        .actions="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")

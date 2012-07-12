@@ -1,0 +1,17 @@
+!!! Strict
+%html
+  %head
+    %title= [@title, "iTelejugito"].compact.join(" | ")
+    = stylesheet_link_tag 'reset', 'application','bootstrap'
+    = javascript_include_tag 'jquery', 'application','bootstrap','popcorn-complete','bootstrap-tab','bootstrap-dropdown', 'ember-0.9.7.1', 'app.js'
+    = yield_content :include
+  %body
+    %div.navbar
+      %div.navbar-inner
+        %div.container
+          %a.brand PandaFeed
+    .container
+      .row
+        .span12= yield
+    #sidebar
+    #footer

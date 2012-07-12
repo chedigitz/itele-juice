@@ -1,0 +1,16 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first=link_to pat(:list), url(:phones, :index)
+      %li=link_to pat(:new), url(:phones, :new)
+      %li.active=link_to pat(:edit), url(:phones, :edit, :id => @phone.id)
+  .content
+    .pager-header
+      %h2 
+        New Phone
+        %small add all your magical devices 
+    .inner
+      -form_for :phone, url(:phones, :update, :id => @phone.id), :method => :put, :class => :form do |f|
+        =partial "phones/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")

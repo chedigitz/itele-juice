@@ -1,0 +1,64 @@
+.group
+  =f.label :answer_url
+  =f.error_message_on :answer_url
+  =f.text_field :answer_url, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :hangup_url
+  =f.error_message_on :hangup_url
+  =f.text_field :hangup_url, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :app_name
+  =f.error_message_on :app_name
+  =f.text_field :app_name, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :answer_method
+  =f.error_message_on :answer_method
+  =f.text_field :answer_method, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :fallback_url
+  =f.error_message_on :fallback_url
+  =f.text_field :fallback_url, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :fallback_method
+  =f.error_message_on :fallback_method
+  =f.text_field :fallback_method, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :message_url
+  =f.error_message_on :message_url
+  =f.text_field :message_url, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :message_method
+  =f.error_message_on :message_method
+  =f.text_field :message_method, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :account_id
+  =f.error_message_on :account_id
+  =f.text_field :account_id, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :number_ids
+  =f.error_message_on :number_ids
+  =f.text_field :number_ids, :class => :text_field
+  %span.description Ex: a simple text
+
+
+.group.navform.wat-cf
+  =f.submit pat(:save), :class => :button
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:plivoapps, :index)}';return false", :class => :button

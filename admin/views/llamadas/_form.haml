@@ -1,0 +1,53 @@
+.group
+  =f.label :status
+  =f.error_message_on :status
+  =f.text_field :status, :class => :text_field
+  %span.description Status
+
+.group
+  =f.label :event
+  =f.error_message_on :event
+  =f.text_field :event, :class => :text_field
+  %span.description ie: hangup, failed, startApp
+
+
+.group
+  =f.label :call_direction
+  =f.error_message_on :call_direction
+  =f.text_field :call_direction, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :from_number
+  =f.error_message_on :from_number
+  =f.text_field :from_number, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :to_number
+  =f.error_message_on :to_number
+  =f.text_field :to_number, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :bill_duration
+  =f.error_message_on :bill_duration
+  =f.text_field :bill_duration, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :end_time
+  =f.error_message_on :end_time
+  =f.text_field :end_time, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :call_uuid
+  =f.error_message_on :call_uuid
+  =f.text_field :call_uuid, :class => :text_field
+  %span.description Ex: a simple text
+
+
+.group.navform.wat-cf
+  =f.submit pat(:save), :class => :button
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:llamadas, :index)}';return false", :class => :button

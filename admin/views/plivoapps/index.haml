@@ -1,0 +1,47 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first.active=link_to pat(:list), url(:plivoapps, :index)
+      %li=link_to pat(:new), url(:plivoapps, :new)
+  .content
+    %h2.title
+      =pat(:all)
+      =mt(:plivoapps)
+    .inner
+      %table.table
+        %tr
+          %th.first=mat(:plivoapp, :answer_url)
+          %th=mat(:plivoapp, :hangup_url)
+          %th=mat(:plivoapp, :app_name)
+          %th=mat(:plivoapp, :answer_method)
+          %th=mat(:plivoapp, :fallback_url)
+          %th=mat(:plivoapp, :fallback_method)
+          %th=mat(:plivoapp, :message_url)
+          %th=mat(:plivoapp, :message_method)
+          %th=mat(:plivoapp, :account_id)
+          %th=mat(:plivoapp, :number_ids)
+          %th=mat(:plivoapp, :created_at)
+          %th=mat(:plivoapp, :updated_at)
+          %th.last="&nbsp;"
+        -@plivoapps.each do |plivoapp|
+          %tr
+            %td.first=plivoapp.answer_url
+            %td=plivoapp.hangup_url
+            %td=plivoapp.app_name
+            %td=plivoapp.answer_method
+            %td=plivoapp.fallback_url
+            %td=plivoapp.fallback_method
+            %td=plivoapp.message_url
+            %td=plivoapp.message_method
+            %td=plivoapp.account_id
+            %td=plivoapp.number_ids
+            %td=plivoapp.created_at
+            %td=plivoapp.updated_at
+            %td.last
+              =button_to pat(:edit), url(:plivoapps, :edit, :id => plivoapp.id), :method => :get, :class => :button_to
+              ="|"
+              =button_to pat(:delete), url(:plivoapps, :destroy, :id => plivoapp.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
+      .actions-bar.wat-cf
+        .actions="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")

@@ -1,0 +1,31 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first.active=link_to pat(:list), url(:tunnels, :index)
+      %li=link_to pat(:new), url(:tunnels, :new)
+  .content
+    %h2.title
+      =pat(:all)
+      =mt(:tunnels)
+    .inner
+      %table.table
+        %tr
+          %th.first=mat(:tunnel, :url)
+          %th=mat(:tunnel, :active)
+          %th=mat(:tunnel, :created_at)
+          %th=mat(:tunnel, :updated_at)
+          %th.last="&nbsp;"
+        -@tunnels.each do |tunnel|
+          %tr
+            %td.first=tunnel.url
+            %td=tunnel.active
+            %td=tunnel.created_at
+            %td=tunnel.updated_at
+            %td.last
+              =button_to pat(:edit), url(:tunnels, :edit, :id => tunnel.id), :method => :get, :class => :button_to
+              ="|"
+              =button_to pat(:delete), url(:tunnels, :destroy, :id => tunnel.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
+      .actions-bar.wat-cf
+        .actions="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")

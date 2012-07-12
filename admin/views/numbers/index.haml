@@ -1,0 +1,35 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first.active=link_to pat(:list), url(:numbers, :index)
+      %li=link_to pat(:new), url(:numbers, :new)
+  .content
+    %h2.title
+      =pat(:all)
+      =mt(:numbers)
+    .inner
+      %table.table
+        %tr
+          %th.first=mat(:number, :voice_enabled)
+          %th=mat(:number, :description)
+          %th=mat(:number, :plivo_number)
+          %th=mat(:number, :sms_enabled)
+          %th=mat(:number, :num)
+          %th=mat(:number, :account_id)
+          %th.last="&nbsp;"
+        -@numbers.each do |number|
+          %tr
+            %td.first=number.voice_enabled
+            %td=number.description
+            %td=number.plivo_number
+            %td=number.sms_enabled
+            %td=number.num
+            %td=number.account_id
+            %td.last
+              =button_to pat(:edit), url(:numbers, :edit, :id => number.id), :method => :get, :class => :button_to
+              ="|"
+              =button_to pat(:delete), url(:numbers, :destroy, :id => number.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
+      .actions-bar.wat-cf
+        .actions="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")

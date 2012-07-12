@@ -1,0 +1,33 @@
+.block
+  .content
+    .pager-header{:style => "padding: 10px;"}
+      %h2
+        Linked Accounts
+        %small Social connections to other services
+
+    -if current_account.authentications.empty?
+      %h5 no services linked, you should add some
+    -else 
+      #authentication.well
+        %h6 Authorized Providers
+        - current_account.authentications.each do |authentication|
+          .row
+            .span1
+              = image_tag "#{authentication.provider}_64.png", :size => "64x64"
+            .span1
+              = image_tag authentication.info["image"], :class => "thumbnail"
+
+            .span1
+              -form_for authentication, url(:authentications, :destroy, :id => authentication.id), :method => :delete, :class => "form-horizontal" do |f|
+                =f.submit "destroy", :class => "btn btn-danger btn-large"
+                
+                  
+      %strong{:style => "padding: 10px;"} link another social service with iTelejugito
+    .row{:style => "padding: 10px;"}
+      .span1
+        
+        %a{:href => "/admin/auth/facebook"}= image_tag "facebook_64.png", :size => "64x64"
+      .span1
+        %a{:href => "/admin/auth/twitter"}= image_tag "twitter_64.png", :size => "64x64"
+
+-content_for :sidebar, partial("base/sidebar")

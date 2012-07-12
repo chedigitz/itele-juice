@@ -1,0 +1,15 @@
+.block
+  .secondary-navigation
+    %ul.wat-cf
+      %li.first=link_to pat(:list), url(:authentications, :index)
+      %li=link_to pat(:new), url(:authentications, :new)
+      %li.active=link_to pat(:edit), url(:authentications, :edit, :id => @authentication.id)
+  .content
+    %h2.title
+      =pat(:edit)
+      =mt(:authentication)
+    .inner
+      -form_for :authentication, url(:authentications, :update, :id => @authentication.id), :method => :put, :class => :form do |f|
+        =partial "authentications/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")

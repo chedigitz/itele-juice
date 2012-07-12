@@ -1,0 +1,26 @@
+.group
+  =f.label :name
+  =f.error_message_on :name
+  =f.text_field :name, :class => :text_field
+  %span.description Ex: iPhone
+
+.group
+  =f.label :number
+  =f.error_message_on :number
+  =f.text_field :number, :class => :text_field
+  %span.description Ex: 267-202-1111
+
+.group
+  =f.label :active
+  =f.error_message_on :active
+  =f.check_box :active, :class => :check_box
+  %span.description Ex: check to activate forwarding 
+
+
+  =f.hidden_field :account_id, :value => current_account.id
+   
+
+
+.group.navform.wat-cf
+  =f.submit pat(:save), :class => "btn btn-primary"
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:phones, :index)}';return false", :class => "btn btn-destroy"

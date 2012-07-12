@@ -1,0 +1,63 @@
+.group
+  =f.label :voice_enabled
+  =f.error_message_on :voice_enabled
+  =f.check_box :voice_enabled, :class => :check_box
+  %span.description Ex: a simple text
+
+.group
+  =f.label :description
+  =f.error_message_on :description
+  =f.text_field :description, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :plivo_number
+  =f.error_message_on :plivo_number
+  =f.check_box :plivo_number, :class => :check_box
+  %span.description Ex: a simple text
+
+.group
+  =f.label :sms_enabled
+  =f.error_message_on :sms_enabled
+  =f.check_box :sms_enabled, :class => :check_box
+  %span.description Ex: a simple text
+
+.group
+  =f.label :num
+  =f.error_message_on :num
+  =f.text_field :num, :class => :text_field
+  %span.description Ex: a simple text
+
+
+.group
+  =f.label :application
+  =f.error_message_on :application
+  =f.text_field :application, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :number_type
+  =f.error_message_on :number_type
+  =f.text_field :number_type, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :added_on
+  =f.error_message_on :added_on
+  =f.text_field :added_on, :class => :text_field
+  %span.description Ex: a simple text
+
+.group
+  =f.label :resource_uri
+  =f.error_message_on :resource_uri
+  =f.text_field :resource_uri, :class => :text_field
+  %span.description Ex: a simple text
+
+
+  =f.hidden_field :account_id, :value => current_account.id
+
+
+
+.group.navform.wat-cf
+  =f.submit pat(:save), :class => :button
+  =f.submit pat(:cancel), :onclick => "window.location='#{url(:numbers, :index)}';return false", :class => :button
