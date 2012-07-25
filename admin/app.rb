@@ -31,11 +31,6 @@ class Admin < Padrino::Application
     provider :facebook, '469061686437443', '93a915d572163e14d33dd43b1f99e693'
  end
 
-  access_control.roles_for :any do |role|
-    role.protect "/"
-    role.allow "/sessions"
-  end
-
   access_control.roles_for :admin do |role|
     role.project_module :plivoapps, '/plivoapps'
     role.project_module :tunnels, '/tunnels'
@@ -45,7 +40,8 @@ class Admin < Padrino::Application
     role.project_module :llamadas, '/llamadas'
     role.project_module :accounts, '/accounts'
   end
-      get :auth, :map => '/auth/:provider/callback' do
+   
+   get :auth, :map => '/auth/:provider/callback' do
      omniauth = request.env["omniauth.auth"]
      logger.info  omniauth
       auth = Account.where("authentications.provider" => omniauth['provider'], "authentications.uid" => omniauth['uid']).first
@@ -87,5 +83,9 @@ class Admin < Padrino::Application
   
   end
 
+  access_control.roles_for :any do |role|
+    role.protect "/"
+    role.allow "/sessions"
+  end
 
 end
