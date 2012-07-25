@@ -26,8 +26,9 @@
 # override these settings in the subapps as needed.
 #
 Padrino.configure_apps do
-  # enable :sessions
+  enable :sessions
   set :session_secret, 'c858cd0bd370ab51efff3ed733776912af4d052e85989257f68f73e903f651fd'
+  set :session_key, 'myawesomesessionkeybiatch'
 end
 
 # Mounts the core application for this project
