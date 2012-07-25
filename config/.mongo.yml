@@ -23,8 +23,8 @@ test:
 
 production:
   adapter: mongodb
-  host: staff.mongohq.com
+  host: ds035897.mongolab.com
   database: itele
-  port: 10097
+  port: 35897
   username: pandaking
   password: walle1111
