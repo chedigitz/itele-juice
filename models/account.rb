@@ -29,7 +29,7 @@ class Account
 
   # Callbacks
   before_save :encrypt_password, :if => :password_required
-  before_save :get_plivo_authid, :if => :plivo_authid_required
+  before_save :get_plivo_auth_id, :if => :plivo_auth_id_required
   
   ##associations 
   many :authentications
@@ -87,13 +87,13 @@ class Account
   end
   
   ## check if plivoauth id required returns true 
-  def plivo_authid_required
+  def plivo_auth_id_required
     plivo_auth_id.blank?
   end
 
   ##
   # this retrieves the account authid from plivo
-  def get_plivo_authid
+  def get_plivo_auth_id
     
     #generates a random 15 character name for plivo
     random_name = ('a'..'z').to_a.shuffle[0,15].join
@@ -108,7 +108,7 @@ class Account
     ### returns true of false if valid code
     if response[0] == 201
       self.plivo_uid = nickname
-      self.plivo_auth_id = find_plivo_authid(plivo_uid)
+      self.plivo_auth_id = find_plivo_auth_id(plivo_uid)
       logger.info "THIS IS RANDOM NAME = #{self.plivo_uid}"
       logger.info "this is plivo auth id = #{self.plivo_authid}"
     end 
@@ -126,7 +126,7 @@ class Account
    end
 
 
-  def find_plivo_authid(uid)
+  def find_plivo_auth_id(uid)
     auth = ""
     client = Plivo::RestAPI.new(AUTH_ID, AUTH_TOKEN)
     response = client.get_subaccounts()
