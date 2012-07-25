@@ -88,7 +88,7 @@ class Account
   
   ## check if plivoauth id required returns true 
   def plivo_authid_required
-    plivo_authid.blank?
+    plivo_auth_id.blank?
   end
 
   ##
@@ -108,7 +108,7 @@ class Account
     ### returns true of false if valid code
     if response[0] == 201
       self.plivo_uid = nickname
-      self.plivo_authid = find_plivo_authid(plivo_uid)
+      self.plivo_auth_id = find_plivo_authid(plivo_uid)
       logger.info "THIS IS RANDOM NAME = #{self.plivo_uid}"
       logger.info "this is plivo auth id = #{self.plivo_authid}"
     end 
@@ -120,7 +120,7 @@ class Account
       #creates a new pliveo app object
       logger.info "building new app"
       p_app = Plivoapp.new(:account_id => self.id)
-      p_app.auth_id = self.plivo_authid
+      p_app.auth_id = self.plivo_auth_id
       p_app.save
      
    end
