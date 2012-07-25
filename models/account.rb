@@ -88,7 +88,12 @@ class Account
   
   ## check if plivoauth id required returns true 
   def plivo_auth_id_required
-    plivo_auth_id.blank?
+    # bypass plivo auth creation for admin users 
+    if self.role == "admin"
+      return false
+    else
+      plivo_auth_id.blank?
+    end
   end
 
   ##
