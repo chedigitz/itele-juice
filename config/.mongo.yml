@@ -24,7 +24,7 @@ test:
 production:
   adapter: mongodb
   host: ds035897.mongolab.com
-  database: itele
+  database: itele_production
   port: 35897
   username: pandaking
   password: walle1111
