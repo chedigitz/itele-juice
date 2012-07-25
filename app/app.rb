@@ -4,7 +4,7 @@ class Itelejugito < Padrino::Application
   register Padrino::Helpers
 
   enable :sessions
-
+  
   ##
   # Caching support
   #
@@ -87,7 +87,7 @@ end
 
 
   get "/" do
-    "awesomeness"
+    render 'call'
   end
 
   post "/callbacks" do 

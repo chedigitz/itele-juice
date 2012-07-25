@@ -1,0 +1,30 @@
+# config/mongomapper.yml
+
+options: &options
+  parameterize_keys: false
+
+defaults: &defaults
+  adapter: mongodb
+  # slaves:
+  #   - host: slave1.local
+  #     port: 27018
+  #   - host: slave2.local
+  #     port: 27019
+
+development:
+  <<: *defaults
+  host: localhost
+  database: itelejugito_development
+
+test:
+  <<: *defaults
+  host: localhost
+  database: itelejugito_testing
+
+production:
+  adapter: mongodb
+  host: staff.mongohq.com
+  database: itele
+  port: 10097
+  username: pandaking
+  password: welcome11

@@ -1,4 +1,4 @@
-Itelejugito.controllers :calls do
+Itelejugito.controllers :calls, :parent => :account do
   # get :index, :map => "/foo/bar" do
   #   session[:foo] = "bar"
   #   render 'index'
@@ -19,11 +19,11 @@ Itelejugito.controllers :calls do
   # end
   
   get :new do 
-       logger.info params.inspect
+     logger.info params.inspect
      params2 =env['rack.request.query_hash']
      logger.info params2.inspect
      
-     response = "test"
+     response =params[:account_id]
      response 
   end 
 
@@ -32,7 +32,7 @@ Itelejugito.controllers :calls do
     logger.info  "THis is params = #{params.inspect}"
     logger.info "tthis is callstatus #{params["CallStatus"]}"
    
- 
+    account_id = params[:account_id]
     #initiaialize call parse object from twilio request
     if params["CallStatus"]=="completed"
       ###if call complete update
@@ -51,7 +51,7 @@ Itelejugito.controllers :calls do
          @call = Llamada.new  
          @call.update_plivo_call(params)
          logger.info "CALL IS = #{@call.inspect}"
-         @account = Account.find(@call.account_id)
+         @account = Account.find(account_id)
          logger.info "this is = #{@account.inspect}"
          logger.info "BEGIN ROUTING"
          response = route_call(@call, @account)
@@ -93,6 +93,10 @@ Itelejugito.controllers :calls do
 
   end 
 
+  post :dialout do
+    logger.info "paramaters passed in #{params.inspect}"
+     
+  end
   
 
 end

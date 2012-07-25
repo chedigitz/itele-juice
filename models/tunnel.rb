@@ -17,17 +17,15 @@ class Tunnel
   def update_plivo_applications
     logger.info "UPDATING APPS START"
     p_apps = Plivoapp.all
-    c = Plivo::RestAPI.new(AUTH_ID, AUTH_TOKEN)
+    
+    # get all applications
     p_apps.each do |a|
-    	urls = a.all_urls
-    	logger.info "UPDATING ALL THE URLS IN #{url.inspect}"
-    	r= c.modify_application(urls)
-    	if r[0] = 201
-    		a.update_all_urls(url)
-    	end
+    	# for each app request application details 
+       app_info = a.update_resource_hash(url) 
+      logger.info "app info hash = #{app_info.inspect}" 
     end
     
-    end
+   end
   
 
 

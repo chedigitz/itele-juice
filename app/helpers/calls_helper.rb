@@ -38,10 +38,12 @@ Itelejugito.helpers do
         logger.info "BUILDING RESPONSE #{r.inspect}"
         logger.info "ADDING NUMBERs #{account.active_phones.inspect}"
         d.addNumber(account.active_phones)
+        d.addUser(account.sip_uri)
         logger.info "BUILDING RESPONSE #{r.inspect}"
         response = r.to_xml()
       end  
     response
   end
+
 
 end

@@ -23,6 +23,7 @@ Admin.controllers :llamadas do
 
   get :edit, :with => :id do
     @llamada = Llamada.find(params[:id])
+    logger.info "#{@llamada.inspect}"
     render 'llamadas/edit'
   end
 

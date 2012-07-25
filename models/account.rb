@@ -13,7 +13,9 @@ class Account
   key :plivo_auth_token, String
   key :sip_secret,       String
   key :nickname,         String
-
+  key :caller_id,        String
+  key :credits,          Float
+  key :sip_endpoint,     Hash
   # Validations
   validates_presence_of     :email, :role, :nickname
   validates_presence_of     :password,                   :if => :password_required
@@ -50,23 +52,30 @@ class Account
   ##
   #this method returns a array all of the active phone for current user
   def active_phones
-    phones = []
+    numbs = []
     self.phones.each do |phone|
       if phone.active
         #if active add to phone array
-        phones << phone
+        numbs << phone.number
       end 
     end
-    if phones.size > 1
+    if numbs.size > 1
       #if more then one add < for plivo   
-      p = phones.join("<")
+      p = numbs.join("<")
     else 
-      p = phones
+      p = numbs[0]
     end 
-    #returns the p object
+    #returns the p string with all phone numbers < seperated 
     p 
   end
   
+  def sip_uri 
+    # returns sip uri 
+    uri = sip_endpoint["sip_uri"]
+    uri
+    
+  end
+
 
   private
   def encrypt_password
@@ -110,8 +119,7 @@ class Account
    def build_new_plivo_app()
       #creates a new pliveo app object
       logger.info "building new app"
-      p_app = Plivoapp.new()
-      p_app.account_id = self.id
+      p_app = Plivoapp.new(:account_id => self.id)
       p_app.auth_id = self.plivo_authid
       p_app.save
      
@@ -139,7 +147,7 @@ class Account
 
   def create_sip_endpoint
     logger.info "CREATING ENDPOINT"
-    self.sip_secret = ('a'..'z').to_a.shuffle[0,9].join
+    self.sip_secret = ('a'..'z').to_a.shuffle[0,5].join
     info = {
       "username" => self.nickname,
       "password" => self.sip_secret,
@@ -151,8 +159,44 @@ class Account
     logger.info "THIS IS CREATE ENDPOINT RESPONSE #{response.inspect}"
     if response[0] = 201
       logger.info "ENDOPOINT CREATED"
+      get_endpoint_info(client)
+
     end
+
   end 
+  
+  #this method is a work around until the api is improved to allow searching for alias
+  def get_endpoint_info(client)
+    response = client.get_endpoints()
+    logger.info "this is response for all endpoints #{response.inspect}"
+    if response[0]= 200
+      # if api call is sucess 
+      all_endpoints= response[1]["objects"]
+      logger.info "entering parsing "
+      all_endpoints.each do |e|
+        logger.info "looking for a match beetween #{e["alias"]} == #{self.id}"
+        if e["alias"] == self.id.to_s
+          #found the endpoint info
+          logger.info "found a match #{e.inspect}"
+          self.sip_endpoint = e
+          add_to_phone(e)
+        end 
+      end 
+    end
+  end
+
+  def add_to_phone(info)
+    #this method creates a new fwd phone with the endppoint info
+    #accepts endpoint object from plivo get endpointinfo 
+    #creates a new phone object with account info
+    logger.info "adding to phone list #{info.inspect}"
+    phone = Phone.new
+    phone.number = info["sip_uri"]
+    phone.active = true
+    phone.name = info["username"]
+    phone.account_id = self.id
+    phone.save
+  end
 
 
 end

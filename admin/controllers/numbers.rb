@@ -1,7 +1,8 @@
 Admin.controllers :numbers do
 
   get :index do
-    @numbers = Number.all
+    
+    @numbers = Number.where("account_id" => current_account.id)
     render 'numbers/index'
   end
 

@@ -11,6 +11,7 @@
       %table.table
         %tr
           %th=mat(:llamada, :call_direction)
+          %th nickname
           %th=mat(:llamada, :from_number)
           %th=mat(:llamada, :to_number)
           %th=mat(:llamada, :call_uuid)
@@ -20,6 +21,7 @@
           %tr
             
             %td=llamada.call_direction
+            %td
             %td=llamada.from_number
             %td=llamada.to_number
             %td=llamada.call_uuid

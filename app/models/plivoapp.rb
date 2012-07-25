@@ -14,23 +14,31 @@ class Plivoapp
   key :account_id, ObjectId
   key :number_ids, Array, :typecast => "ObjectId"
   key :auth_id, String
+  key :info, Hash
   timestamps!
 
   belongs_to :account
   many :numbers, :in => :number_ids
 
-  before_save :update_pliveo_app, :if => :update_required
+  # before_save :create_pliveo_app, :if => :update_required
 
   
+  def initialize()
+    create_pliveo_app()
+  end
+
+
   
   def all_urls(tunnel)
     # accepts a tunnel an returns all app urls
     urls = {
-      "answer_url" => "#{tunnel}/calls/#{account_id}/new",
-      "hangup" => "#{tunnel}/calls/#{account_id}/hangup",
-      "fallback" => "#{tunnel}/calls/#{account_id}/fallback",
-      "message" => "#{tunnel}/calls/#{account_id}/message"
+      "answer_url" => "#{tunnel}/account/#{account_id}/calls/new",
+      "hangup_url" => "#{tunnel}/account/#{account_id}/calls/hangup",
+      "fallback_url" => "#{tunnel}/account/#{account_id}/calls/fallback",
+      "message_url" => "#{tunnel}/account/#{account_id}/calls/message"
+      # "app_name" => self.app_name
     }
+    logger.info "this all urls #{urls.inspect}"
     urls    
   end
 
@@ -40,8 +48,62 @@ class Plivoapp
     self.update_attributes(urls)    
   end
 
+  def get_resource_hash
+    # returns app resource uri
+    if info_update_required?
+      update_app_info()
+    end 
+    info
+  end 
+  def update_resource_hash(tunnel)
+    self.update_all_urls(tunnel)
+    update_app_info()
+    info 
+  end
+
+
   private
-  def update_pliveo_app()
+  def update_app_info()
+      c = Plivo::RestAPI.new(self.account.plivo_authid, self.account.plivo_auth_token)
+      r = c.get_applications()
+      logger.info "response from get applications #{r.inspect}"
+      # response for all applications for sub account
+      if r[0] == 200
+        #response is valid
+          logger.info "app objects is #{r[1]["objects"].inspect}"
+          sub_account_apps = r[1]["objects"]
+          sub_account_apps.each do |s_app|
+            # parse all apps if more then one          
+             if s_app["app_name"] == self.app_name
+               self.info = s_app
+               self.save
+               update_plivo(c)
+             end
+          end
+      end
+  end
+
+  def update_plivo(client)
+    urls = {
+      "answer_url" => self.answer_url,
+      "hangup_url" => self.hangup_url,
+      "fallback_url" => self.fallback_url,
+      "message_url" => self.message_url
+    }
+    logger.info "UPDATING ALL THE URLS IN #{urls.inspect}"
+    app_id = self.info["app_id"]
+    path = '/Application/' + app_id + '/'
+    logger.info "path to API IS #{path.to_s}"
+    r = client.modify_application(urls, path)
+    logger.info "response from url update #{r.inspect}"
+    # if r[0] == 202
+      # self.update_all_urls(url)
+    # end
+    
+  end
+
+  ##creates plivo app usin api
+  def create_pliveo_app()
     info = {
       "answer_url" => build_url(account_id,"answer"),
       "app_name" => account_id,
@@ -70,9 +132,10 @@ class Plivoapp
     self.account_id = account_id
   end
 
-  def update_required
-    app_name.blank?    
+  def info_update_required?
+    info.blank? || self.changed?
   end
+
 
   def build_url(account_id, action)
     # accepts account object
@@ -81,13 +144,15 @@ class Plivoapp
     url_p = tun.url
     case action
     when "answer"
-      url = "#{url_p}/calls/#{account_id}/new"
+      url = "#{url_p}/account/#{account_id}/calls/new"
     when "hangup"
-      url = "#{url_p}/calls/#{account_id}/hangup"
+      url = "#{url_p}/account/#{account_id}/calls/hangup"
     when "fallback"
-      url = "#{url_p}/calls/#{account_id}/fallback"
+      url = "#{url_p}/account/#{account_id}/calls/fallback"
     when "message"
-      url = "#{url_p}/call/#{account_id}/message"
+      url = "#{url_p}/account/#{account_id}/calls/message"
+    logger.info "THIS IS BUILD URL #{url.inspect}"
+
     url 
     
     end

@@ -17,6 +17,14 @@
   %span.description Ex: a simple text
 
 .group
+  =f.label :caller_id
+  =f.error_message_on :caller_id
+  =f.text_field :caller_id, :class => :text_field
+  %span.description Ex: 12672024611
+
+
+
+.group
   =f.label :email
   =f.error_message_on :email
   =f.text_field :email, :class => :text_field
