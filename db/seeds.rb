@@ -10,7 +10,7 @@ password  = "walle1111"
 
 shell.say ""
 
-account = Account.create(:email => email, :name => "Panda", :surname => "King", :password => password, :password_confirmation => password, :role => "admin")
+account = Account.create(:email => email, :name => "Panda", :surname => "King", :password => password, :password_confirmation => password, :role => "admin", :nickname => "Pking")
 
 if account.valid?
   shell.say "================================================================="
