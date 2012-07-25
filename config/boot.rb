@@ -26,5 +26,7 @@ end
 #
 Padrino.after_load do
 end
+Padrino.use Rack::Session::Cookie, :session_secret => 'c858cd0bd370ab51efff3ed733776912af4d052e85989257f68f73e903f651fd'
+
 
 Padrino.load!

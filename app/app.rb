@@ -56,8 +56,6 @@ class Itelejugito < Padrino::Application
   #     render 'errors/505'
   #   end #
 enable :sessions
-use Rack::Session::Pool, :expire_after => 2592000
-set :protection, :except => [:frame_options, :remote_token, :session_hijacking]
 set :admin_model, 'Account'
 
 require 'padrino-core/application/routing'
