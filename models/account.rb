@@ -112,7 +112,7 @@ class Account
     logger.info "THIS IS RESPONSE #{response.inspect}"
     ### returns true of false if valid code
     if response[0] == 201
-      self.plivo_uid = nickname
+      self.plivo_uid = self.nickname
       self.plivo_auth_id = find_plivo_auth_id(plivo_uid)
       logger.info "THIS IS RANDOM NAME = #{self.plivo_uid}"
       logger.info "this is plivo auth id = #{self.plivo_authid}"
