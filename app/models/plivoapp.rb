@@ -32,10 +32,10 @@ class Plivoapp
   def all_urls(tunnel)
     # accepts a tunnel an returns all app urls
     urls = {
-      "answer_url" => "#{tunnel}/account/#{account_id}/calls/new",
-      "hangup_url" => "#{tunnel}/account/#{account_id}/calls/hangup",
-      "fallback_url" => "#{tunnel}/account/#{account_id}/calls/fallback",
-      "message_url" => "#{tunnel}/account/#{account_id}/calls/message"
+      "answer_url" => "#{tunnel}/account/#{self.account_id}/calls/new",
+      "hangup_url" => "#{tunnel}/account/#{self.account_id}/calls/hangup",
+      "fallback_url" => "#{tunnel}/account/#{self.account_id}/calls/fallback",
+      "message_url" => "#{tunnel}/account/#{self.account_id}/calls/message"
       # "app_name" => self.app_name
     }
     logger.info "this all urls #{urls.inspect}"
@@ -144,13 +144,13 @@ class Plivoapp
     url_p = tun.url
     case action
     when "answer"
-      url = "#{url_p}/account/#{account_id}/calls/new"
+      url = "#{url_p}/account/#{self.account_id}/calls/new"
     when "hangup"
-      url = "#{url_p}/account/#{account_id}/calls/hangup"
+      url = "#{url_p}/account/#{self.account_id}/calls/hangup"
     when "fallback"
-      url = "#{url_p}/account/#{account_id}/calls/fallback"
+      url = "#{url_p}/account/#{self.account_id}/calls/fallback"
     when "message"
-      url = "#{url_p}/account/#{account_id}/calls/message"
+      url = "#{url_p}/account/#{self.account_id}/calls/message"
     logger.info "THIS IS BUILD URL #{url.inspect}"
 
     url 
