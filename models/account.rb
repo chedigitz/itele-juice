@@ -115,7 +115,7 @@ class Account
       self.plivo_uid = self.nickname
       self.plivo_auth_id = find_plivo_auth_id(plivo_uid)
       logger.info "THIS IS RANDOM NAME = #{self.plivo_uid}"
-      logger.info "this is plivo auth id = #{self.plivo_authid}"
+      logger.info "this is plivo auth id = #{self.plivo_auth_id}"
     end 
     build_new_plivo_app()
     create_sip_endpoint()
@@ -124,7 +124,8 @@ class Account
    def build_new_plivo_app()
       #creates a new pliveo app object
       logger.info "building new app"
-      p_app = Plivoapp.new(:account_id => self.id)
+      p_app = Plivoapp.new()
+      p_app.account_id = self.id
       p_app.auth_id = self.plivo_auth_id
       p_app.save
      
