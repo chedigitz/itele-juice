@@ -40,7 +40,7 @@ $(function(){
 
     // Save all of the todo items under the `"todos"` namespace.
     //localStorage: new Store("todos"),
-	  url: '/api/todos',
+	  url: '/api/calls',
 
     // Filter down the list of all todo items that are finished.
     done: function() {
