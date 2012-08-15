@@ -3,6 +3,7 @@ config/*
 log/**/*
 tmp/**/*
 bin/*
+db/*
 vendor/gems/*
 !vendor/gems/cache/
 .sass-cache/*
